@@ -1,0 +1,13 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/marine-champion-396005/reactapp', '.']
+# Push the container image to Container Registry
+- name: 'gcr.io/marine-champion-396005/reactapp'
+  args: ['push', 'gcr.io/marine-champion-396005/react-app']
+# Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'react-app', '--image', 'gcr.io/marine-champion-396005/reactapp', '--region', 'REGION']
+images:
+- gcr.io/marine-champion-396005/react-app
